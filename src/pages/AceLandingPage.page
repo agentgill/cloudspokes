@@ -1,0 +1,55 @@
+<apex:page controller="AceController" sidebar="false" cache="false" showHeader="false" standardStyleSheets="false" >
+
+   <apex:composition template="AceMainPage">
+
+<apex:define name="steps"> 
+<apex:form >
+
+		<div class="span9">
+			<p>Please complete Steps 1 through 3 in sequence</p>
+		</div>
+
+
+           <div class="span9">
+ 				<table class="table" border="0">
+					<tr>
+						<td>Instructions</td>
+						<td>Step</td>
+						<td>Name</td>
+						<td>Status</td>
+						<td>Step Actions</td>
+					</tr>
+					<tr>
+						<td><apex:commandButton value="Instructions" action="{!start}" styleclass="btn btn-fail" /> </td>
+						<td>1</td>
+						<td>CompanyName/CNWM Accounts</td>
+						<td>Not Started</td>
+						<td> <apex:commandButton value="Start" action="{!start}" styleclass="btn btn-success" /></td>
+					</tr>
+					<tr>
+						<td><apex:commandButton value="Instructions" action="{!start}" styleclass="btn btn-fail" /></td>
+						<td>2</td>
+						<td>Holdings in CompanyName/CNWM Accounts</td>
+						<td>Not Started</td>
+						<td> <apex:commandButton value="Start" action="{!start}" styleclass="btn btn-success"  /></td>
+					</tr>
+					<tr>
+						<td><apex:commandButton value="Instructions" action="{!start}" styleclass="btn btn-fail" /></td>
+						<td>3</td>
+						<td>Certification</td>
+						<td>Not Started</td>
+						<td> <div class="controls">
+              				 <apex:commandButton value="Start" action="{!start}" styleclass="btn btn-success" />
+              				     
+             				</div>
+             			</td>
+					</tr>
+				</table>
+          </div>
+          <div class="span9">
+            <apex:commandButton value="Exit" action="{!exit}" styleclass="btn btn-fail" />
+            </div>
+</apex:form>
+</apex:define>
+</apex:composition>
+</apex:page>

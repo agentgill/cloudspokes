@@ -1,0 +1,97 @@
+<apex:page controller="AceAccountsListEditController" sidebar="false" cache="false" showHeader="false" standardStyleSheets="false" >
+  <apex:composition template="AceAccountViewPage">
+  
+  <apex:define name="accountView">
+  <style>
+    .requiredHeader{
+    	color: #F00;
+    }    
+  </style>
+  
+  <apex:form >
+    <apex:pageBlock id="block">
+  
+   <div class="control-group">
+             <label class="control-label"></label>
+             <div class="controls">
+               <apex:commandButton value="Confirm" action="{!save}" styleclass="btn btn-success" />
+            &nbsp;
+               <apex:commandButton value="Disclose Account" action="{!insertAcct}" styleclass="btn btn-success" />
+                 
+             </div>
+     </div>
+  
+	<div class="control-group">
+             <label class="control-label"></label>
+             <div class="controls">
+             
+               
+             
+                 
+             </div>
+     </div>
+  
+ 	
+
+	
+ <div class="table table-hover">
+ 
+      <apex:pageBlockTable value="{!wrappers}" var="wrap" cellpadding="2px">
+      	
+
+        <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Account_Type__c.label}">
+          <apex:outputField value="{!wrap.acct.Account_Type__c}" />
+        </apex:column>
+      
+	   
+	    <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Name.label}" >
+	      <apex:outputField value="{!wrap.acct.Name}" />
+        </apex:column>
+    
+            <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Account_Title__c.label}" >
+	      <apex:outputField value="{!wrap.acct.Account_Title__c}" />
+        </apex:column>
+        
+         <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Account_Designation__c.label}" >
+	      <apex:outputField value="{!wrap.acct.Account_Designation__c}" />
+        </apex:column>
+        
+        <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Reason_for_Addition__c.label}" >
+	     
+          <apex:outputField value="{!wrap.acct.Reason_for_Addition__c}" />
+        </apex:column>
+        
+            <apex:column headerValue="{!$ObjectType.Accounts__c.fields.Open_Date__c.label}" >
+	      <apex:outputField value="{!wrap.acct.Open_Date__c}" />
+        </apex:column>
+     
+
+  
+  
+             
+        <apex:column headerValue="Actions">
+        
+ 
+        
+          <apex:commandButton value="Update" action="{!updateAcct}" rerender="block"  styleclass="btn btn-success" >
+            <apex:param name="keyToUpdate" value="{!wrap.key}" assignTo="{!keyToUpdate}" />
+          </apex:commandButton>
+      
+         </apex:column>
+      <apex:column >
+          <apex:commandButton value="Delete" action="{!removeItem}" rerender="block"  styleclass="btn btn-cancel" >
+            <apex:param name="keyToDelete" value="{!wrap.key}" assignTo="{!keyToDelete}" />
+          </apex:commandButton>
+        </apex:column>
+     
+	
+   
+      </apex:pageBlockTable>
+   </div>
+
+    </apex:pageBlock>
+  </apex:form>
+  </apex:define>
+</apex:composition>
+
+</apex:page>

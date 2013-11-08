@@ -1,0 +1,119 @@
+<apex:page standardController="Accounts__c" extensions="AceAccountsExtension"  applyHtmlTag="false" applyBodyTag="false" sidebar="false" showHeader="false" standardStyleSheets="false">
+
+<apex:composition template="AceMainAccountPage">
+<apex:define name="accountPage">
+<apex:messages />
+<apex:message />
+<html>
+<head>
+<title>Annual Certification for Engineers (ACE) Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!--  
+  <link href="{!URLFOR($Resource.bootstrap, 'bootstrap/css/bootstrap.min.css')}" rel="stylesheet" media="screen"/>
+  <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'bootstrap/js/bootstrap.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.jquery, 'jquery-1.8.3.js')}"/>
+ -->
+  <style>
+		.affix {
+    		top: 10px;
+		}    
+     </style>
+ 
+ </head>
+ <body>
+
+      <apex:outputPanel rendered="{!error}">
+		   <div class="alert alert-block alert-error">
+  			 <h4>Error</h4> 
+  			 <apex:outputText value="{!errorMsg}" />
+		   </div>         
+		 </apex:outputPanel>
+
+		 
+         <apex:form styleClass="form-horizontal">
+           <div class="well">
+             <fieldset>
+			   <legend>Complete fields below to add a Company Name/CSWM or mutal fund account</legend>
+			 </fieldset>
+      <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="accountType" value="Account Type" />
+             <div class="controls">
+			   <div class="input-prepend">
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="accountType" value="{!Accounts__c.Account_Type__c}" />
+               </div>
+             </div>
+           </div>
+            <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="accountNumber" value="Account Number" />
+             <div class="controls">
+			   <div class="input-prepend">
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="accountNumber" value="{!Accounts__c.Name}" />
+               </div>
+             </div>
+           </div>
+            <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="accountTitle" value="Account Title" />
+             <div class="controls">
+			   <div class="input-prepend">
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="accountTitle" value="{!Accounts__c.Account_Title__c}" />
+               </div>
+             </div>
+           </div>
+              <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="accountDesignation" value="Account Designation" />
+             <div class="controls">
+			   <div class="input-prepend">
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="accountDesignation" value="{!Accounts__c.Account_Designation__c}" />
+               </div>
+             </div>
+           </div>
+          
+           <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="reasonForAddition" value="Reason for Addition" />
+             <div class="controls">
+			   <div class="input-prepend">
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="reasonForAddition" value="{!Accounts__c.Reason_for_Addition__c}" />
+               </div>
+             </div>
+           </div>
+           
+                <div class="control-group error">
+             <apex:outputLabel styleClass="control-label" for="openDate" value="Open Date" />
+             <div class="controls">
+			   <div class="input-prepend" >
+                 <span class="add-on"><i class="icon-file"></i></span>
+                 <apex:inputField id="openDate" value="{!Accounts__c.Open_Date__c}"/>
+               </div>
+             </div>
+           </div>
+         
+          
+           <div class="control-group">
+             <label class="control-label"></label>
+             <div class="controls">
+               <apex:commandButton value="Confirm" action="{!save}" styleclass="btn btn-success" />
+             
+               <apex:commandButton value="Cancel" action="{!Cancel}" styleclass="btn btn-fail" />          
+             </div>
+           </div>
+           </div>
+
+</apex:form>
+
+ 
+ 
+ 
+ 
+ </body>
+ 
+ </html>
+ 
+</apex:define>
+</apex:composition>
+</apex:page>

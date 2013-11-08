@@ -1,0 +1,48 @@
+<apex:page sidebar="false" cache="false" showHeader="false" standardStyleSheets="false">
+
+<html>
+<head>
+<title>Annual Certification for Engineers (ACE) Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+  <link href="{!URLFOR($Resource.bootstrap, 'bootstrap/css/bootstrap.min.css')}" rel="stylesheet" media="screen"/>
+  <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'bootstrap/js/bootstrap.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.jquery, 'jquery-1.8.3.js')}"/>
+ 
+  <style>
+		.affix {
+    		top: 10px;
+		}    
+     </style>
+ 
+ </head>
+ <body>
+
+	  <div class="container-fluid">
+        <div class="hero-unit">
+          <h1>Ace</h1>
+          <h2>CloudSpokes Challenge</h2>
+                  <h3>Welcome {!$User.FirstName} to Annual Certification for Engineers WebSite</h3>
+          
+        </div>
+
+        <div class="row-fluid">
+          <div class="span3">
+            <apex:insert name="sidebar" />
+          </div>
+
+          <div class="span9">
+            <apex:insert name="steps"/>
+          </div>
+          
+         
+           
+		</div>
+	</div>
+ 
+		
+     
+</body>
+</html>
+</apex:page>
