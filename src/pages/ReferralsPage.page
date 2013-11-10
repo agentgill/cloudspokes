@@ -1,19 +1,28 @@
 <apex:page controller="ReferralsHandler">
    <apex:form >
-     <apex:pageBlock title="Criteria">
+     <apex:pageBlock title="Search Companies" id="searchCompanies">
        <apex:pageBlockSection >
          <apex:pageBlockSectionItem >
           <apex:outputLabel value="Name"/>
         <apex:inputText value="{!name}"/> 
          </apex:pageBlockSectionItem>
          <!--  > <apex:commandButton value="Go" action="{!executeSearch}" /> -->
-            <apex:commandButton value="Search Companies" action="{!addAccounts}" /> 
+            <apex:commandButton value="Search" action="{!searchAccounts}" /> 
        </apex:pageBlockSection>
        </apex:pageBlock>
-       <apex:pageBlock title="Results" rendered="{!searched}">
+       <apex:pageBlock title="Results" rendered="{!searched}" id="block">
           <apex:pageBlockTable value="{!wrappers}" var="wrap">
-              <apex:column value="{!wrap.referral.name}" />  
-
+              <apex:column value="{!wrap.accountReferral.name}" />  
+               <apex:column value="{!wrap.accountReferral.BillingCity}" />  
+				<apex:column value="{!wrap.accountReferral.BillingState}" />
+					<apex:column value="{!wrap.accountReferral.BillingPostalCode}" />
+					
+					     <apex:column style="width:15%" headerValue="Actions">
+          <apex:commandButton value="Delete" action="{!removeItem}" rerender="block">
+            <apex:param name="keyToDelete" value="{!wrap.key}" assignTo="{!keyToDelete}" />
+          </apex:commandButton>
+        </apex:column>
+					
           </apex:pageBlockTable>
         
      </apex:pageBlock>

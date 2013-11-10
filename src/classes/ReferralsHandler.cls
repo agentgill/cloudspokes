@@ -49,22 +49,20 @@ public with sharing class ReferralsHandler
 		addItemCount=1;
 		wrappers=new List<ReferralsWrapper>();
 		
-		List<Account> acc = [select Name from Account limit 1];
+		//List<Account> acc = [select Name from Account limit 1];
 		
-		for (Account a : acc)
-		{
-			wrappers.add(new ReferralsWrapper(mainKey++, a)); 
-		}
+		//for (Account a : acc)
+		//{
+			//wrappers.add(new ReferralsWrapper(mainKey++, a)); 
+		//}
 		
 		
 	}
 	
-	public PageReference addAccounts(){
-		
-
-		
-		//Account acct = [select Id, Name from Account];
-		
+	public PageReference searchAccounts(){
+			
+	
+		searched=false;
 		executeSearch();
 		
 		
@@ -82,6 +80,35 @@ public with sharing class ReferralsHandler
 		
 	}
 	
+	public PageReference removeItem()
+	{
+		Integer idx=0;
+		Boolean found=false;
+		for (ReferralsWrapper wrap : wrappers)
+		{
+			if (wrap.key==keyToDelete)
+			{
+				found=true;
+				if (null!=wrap.accountReferral.id)
+				{
+					//toDelete.add(wrap.accountReferral);
+				}
+				break;
+			}
+			else
+			{
+				idx++;
+			}
+		}
+		
+		if (found)
+		{
+			wrappers.remove(idx);
+		}
+		
+		return null;
+	}
+	
 	// action method to search for accounts whose name contains the entered
 	// text
 	public PageReference executeSearch()
@@ -93,18 +120,5 @@ public with sharing class ReferralsHandler
 		return null;
 	}
 	
-	// action method to allow editing of the matching accounts - redirects the user to the
-	// EditFromSearch page and passes the account ids as parameters on the URL
-	public PageReference edit()
-	{
-		PageReference pr=Page.ReferralsPage;
-		Integer idx=1;
-		for (Account acc : accounts)
-		{
-			pr.getParameters().put('account' + idx, acc.id);
-			idx++;
-		}
-		
-		return pr;
-	}
+	
 }
