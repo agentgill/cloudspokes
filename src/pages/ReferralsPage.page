@@ -1,0 +1,21 @@
+<apex:page controller="ReferralsHandler">
+   <apex:form >
+     <apex:pageBlock title="Criteria">
+       <apex:pageBlockSection >
+         <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Name"/>
+        <apex:inputText value="{!name}"/> 
+         </apex:pageBlockSectionItem>
+         <!--  > <apex:commandButton value="Go" action="{!executeSearch}" /> -->
+            <apex:commandButton value="Search Companies" action="{!addAccounts}" /> 
+       </apex:pageBlockSection>
+       </apex:pageBlock>
+       <apex:pageBlock title="Results" rendered="{!searched}">
+          <apex:pageBlockTable value="{!wrappers}" var="wrap">
+              <apex:column value="{!wrap.referral.name}" />  
+
+          </apex:pageBlockTable>
+        
+     </apex:pageBlock>
+   </apex:form>
+</apex:page>
