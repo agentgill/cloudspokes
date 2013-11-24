@@ -21,7 +21,8 @@ public with sharing class ReferralsHandler
 	public Integer keyToDelete {get; set;}
 	public Integer keyToDeleteContact {get; set;}
 	
-
+	public String fromAddress {get;set;}
+	public String ccAddress {get;set;}
 	
 	// the unique record key master value
 	public Integer mainKey {get; set;}
@@ -31,6 +32,10 @@ public with sharing class ReferralsHandler
 	// the search text
 	public String name {get; set;}
 	public String nameContact {get; set;}
+	
+	// previews / email
+	public String previewSubject {get;set;}
+	public String previewBody {get;set;}
 	
 
 	
@@ -42,6 +47,14 @@ public with sharing class ReferralsHandler
 	public Boolean searched {get; set;}
 	public Boolean searchedContact {get; set;}
 	
+	// Add refering account on load
+	private List<Account> referredAccount=new List<Account>();
+	
+	Id oppId = ApexPages.currentPage().getParameters().get('accid');
+	Id acctId = ApexPages.currentPage().getParameters().get('acctid');
+	
+	Account acct;
+	
 	// constructor - extracts the search parameter from the URL and, if
 	// present, executes a search to find matching accounts
 	public ReferralsHandler()
@@ -50,6 +63,21 @@ public with sharing class ReferralsHandler
 		searchedContact=false;
 		String nameStr=ApexPages.currentPage().getParameters().get('name');
 		String nameStrContact=ApexPages.currentPage().getParameters().get('nameContact');
+		String ccAddress=Apexpages.currentPage().getParameters().get('ccAddress');
+		Id acctId = ApexPages.currentPage().getParameters().get('acctid');
+		
+		
+		String userName = Userinfo.getName();
+		fromAddress = userName;
+		
+		// Set preview email defaults
+		
+			String previewSubjectStr = '{!Account.Name} - Referral from Univeral Containers';
+			String previewBodyStr = 'I thought you might be interested at looking into {!Account.Name}';
+			previewBody = previewBodyStr;
+			previewSubject = previewSubjectStr;
+		
+
 		
 		if (null!=nameStr)
 		{
@@ -73,8 +101,36 @@ public with sharing class ReferralsHandler
 		addItemCountContact=1;
 		wrappers=new List<ReferralsWrapper>();
 		wrapperscon=new List<ReferralsContactWrapper>();
-	
 		
+		/*
+		
+		
+		*/
+	}
+	
+	public PageReference addAccount(){
+		
+		
+
+		if (acctId!=null){
+			acct = [select Name, BillingCity, BillingState, BillingPostalCode from Account where Id =:acctId Limit 1];
+			System.debug('debug'+acct.Name);
+		}
+		
+		if (acctId!=null){
+			wrappers.add(new ReferralsWrapper(0, new Account(Id = acct.Id, 
+																			Name = acct.Name,
+																			BillingCity = acct.BillingCity,
+																			BillingState = acct.BillingState,
+																			BillingPostalCode = acct.BillingPostalCode )));
+																			
+																			
+																		
+																			
+			searched=false;
+			executeSearch();
+		}
+		return null;
 	}
 	
 	public PageReference searchAccounts(){
@@ -83,7 +139,10 @@ public with sharing class ReferralsHandler
 		searched=false;
 		executeSearch();
 		
-		
+		if (accounts.size()!=null){
+			
+				
+			
 		if ( (addItemCount>0) && (addItemCount<10) )
 		{
 			for (Integer idx=0; idx<addItemCount; idx++)
@@ -97,7 +156,7 @@ public with sharing class ReferralsHandler
 			
 			}
 		}
-		
+		}
 		return null;
 		
 	}
@@ -162,10 +221,6 @@ public with sharing class ReferralsHandler
 			if (wrap.cKey==keyToDeleteContact)
 			{
 				found=true;
-				if (null!=wrap.contactReferral.id)
-				{
-					//toDelete.add(wrap.accountReferral);
-				}
 				break;
 			}
 			else
@@ -182,9 +237,8 @@ public with sharing class ReferralsHandler
 		return null;
 	}
 	
-	
+	//TODO: Update to use SOSL
 	// action method to search for accounts whose name contains the entered
-	// text
 	public PageReference executeSearch()
 	{
 		searched=true;
@@ -194,14 +248,29 @@ public with sharing class ReferralsHandler
 		return null;
 	}
 	
+	//TODO: Update to use SOSL
 	// action method to search for accounts whose name contains the entered
-	// text
 	public PageReference executeContactSearch()
 	{
 		searchedContact=true;
 		String searchStr='%' + nameContact + '%';
 		contacts=[select Id, FirstName, LastName, Phone, Email, Account.Name from Contact where name Like :searchStr];
 		
+		return null;
+	}
+	
+	public PageReference save(){
+		
+		System.debug('debug companies selected is'+wrappers.size() + wrappers);
+		System.debug('debug contacts selected is '+wrapperscon.size() + wrapperscon);
+		
+		return null;
+	}
+	
+		public PageReference cancel(){
+			
+			PageReference result=new PageReference('/'+acctId);
+					return result.setRedirect(true);
 		return null;
 	}
 	

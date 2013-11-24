@@ -1,16 +1,16 @@
-<apex:page controller="ReferralsHandler">
+<apex:page controller="ReferralsHandler" action="{!addAccount}">
    <apex:form >
-     <apex:pageBlock title="Search Companies" id="searchCompanies">
+     <apex:pageBlock title="Referral Companies" id="searchCompanies">
        <apex:pageBlockSection >
          <apex:pageBlockSectionItem >
-          <apex:outputLabel value="Name"/>
-        <apex:inputText value="{!name}"/> 
+          <apex:outputLabel value="Include additional companies"/>
+        <apex:inputText value="{!name}" style="width:200px"/> 
          </apex:pageBlockSectionItem>
 
             <apex:commandButton value="Search" action="{!searchAccounts}" /> 
        </apex:pageBlockSection>
        </apex:pageBlock>
-       <apex:pageBlock title="Results" rendered="{!searched}" id="block">
+       <apex:pageBlock title="Company Results" rendered="{!searched}" id="block">
           <apex:pageBlockTable value="{!wrappers}" var="wrap">
             <apex:column value="{!wrap.accountReferral.name}" />  
             <apex:column value="{!wrap.accountReferral.BillingCity}" />  
@@ -27,17 +27,42 @@
         
      </apex:pageBlock> 
      
-      <apex:pageBlock title="Search Contacts" id="searchContacts">
-       <apex:pageBlockSection >
+     <apex:pageBlock title="From">
+     Optionally enter any email addresses you like to CC on this referral
+
+     	
+       <apex:pageBlockSection columns="2" >
+       
+     
+            <apex:pageBlockSectionItem >
+          <apex:outputLabel value="From:"/>
+        <apex:outputText value="{!fromAddress}"/> 
+         </apex:pageBlockSectionItem>
+       
          <apex:pageBlockSectionItem >
-          <apex:outputLabel value="Name"/>
-        <apex:inputText value="{!nameContact}"/> 
+          <apex:outputLabel value="CC:"/>
+        <apex:inputText value="{!ccAddress}" style="width:200px"/> 
+         </apex:pageBlockSectionItem>
+
+         
+       </apex:pageBlockSection>
+     </apex:pageBlock>
+     
+      <apex:pageBlock title="To" id="searchContacts">
+      Select contacts to whom you would like to refer your selected company
+      
+      
+       <apex:pageBlockSection >
+       
+         <apex:pageBlockSectionItem >
+          	<apex:outputLabel value="Search Contacts"/>
+       		 <apex:inputText value="{!nameContact}" style="width:200px"/> 
          </apex:pageBlockSectionItem>
 
             <apex:commandButton value="Search" action="{!searchContacts}" /> 
        </apex:pageBlockSection>
        </apex:pageBlock>
-       <apex:pageBlock title="Results" rendered="{!searchedContact}" id="blockContact">
+       <apex:pageBlock title="Contact Results" rendered="{!searchedContact}" id="blockContact">
           <apex:pageBlockTable value="{!wrapperscon}" var="wrapcon">
             <apex:column value="{!wrapcon.contactReferral.FirstName}" />  
             <apex:column value="{!wrapcon.contactReferral.LastName}" />   
@@ -52,6 +77,22 @@
 					
           </apex:pageBlockTable>
         
+     </apex:pageBlock>
+     
+     <apex:pageBlock title="Send Emails">
+     <p>Preview the email template and make any adjustments before sending</p>
+     <br/>
+     
+          <apex:pageBlockSection columns="1" >
+          	<apex:outputLabel value="Subject:"/>
+        	<apex:inputText value="{!previewSubject}"  style="width:400px"/> 
+          	<apex:outputLabel value="Body:"/>
+        	<apex:inputTextarea value="{!previewBody}"  style="width:400px;height:100px"/> 
+          
+		
+       </apex:pageBlockSection>
+        	<apex:commandButton value="Send" action="{!save}" />
+            <apex:commandButton value="Cancel" action="{!cancel}" />
      </apex:pageBlock>
    </apex:form>
 </apex:page>
